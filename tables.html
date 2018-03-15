@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html ng-app="categoryModule">
+<html ng-app="tableModule">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Categories</title>
+    <title>Tables</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
-    <script src="scripts/Angular.min.js"></script>
-    <script src="scripts/category.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/table.js"></script>
 </head>
-<body ng-controller="categoryController">
+
+<body ng-controller="tableController">
     <h3>{{title}}</h3>
     <form>
         <fieldset>
             <table>
                 <tr>
-                    <td>Code : </td>
+                    <td>Code :</td>
                     <td>
-                        <input type="text" ng-model="category.code">
+                        <input type="text" ng-model="table.code">
                     </td>
                 </tr>
                 <tr>
-                    <td>Initial : </td>
+                    <td>Seat :</td>
                     <td>
-                        <input type="text" ng-model="category.initial">
+                        <input type="number" ng-model="table.seat">
                     </td>
                 </tr>
                 <tr>
-                    <td>Name : </td>
+                    <td>Description :</td>
                     <td>
-                        <input type="text" ng-model="category.name">
+                        <input type="text" ng-model="table.description">
                     </td>
                 </tr>
                 <tr>
@@ -46,22 +48,23 @@
             <tr>
                 <th>No</th>
                 <th>Code</th>
-                <th>Intial</th>
-                <th>Name</th>
+                <th>Seat</th>
+                <th>Description</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="category in categories">
-                <td>{{$index + 1}}</td>
-                <td>{{category.code}}</td>
-                <td>{{category.initial}}</td>
-                <td>{{category.name}}</td>
+            <tr ng-repeat="table in tables">
+                <td>{{$index+1}}</td>
+                <td>{{table.code}}</td>
+                <td>{{table.seat}}</td>
+                <td>{{table.description}}</td>
                 <td>
-                    <input type="button" value="Edit" ng-click="edit(category)">
-                    <input type="button" value="Delete" ng-click="delete(category)">
+                    <input type="button" value="Edit" ng-click="edit(table)">
+                    <input type="button" value="Delete" ng-click="delete(table)">
                 </td>
             </tr>
         </tbody>
     </table>
 </body>
+
 </html>
