@@ -8,17 +8,11 @@ var productModule = angular
             .then(function (response) {
                 $scope.products = response.data;
             })
-            .catch(function (response) {
-                $scope.status = response;
-            })
 
         $scope.category_url = "http://localhost:3000/api/categories";
         $http.get($scope.category_url)
             .then(function (response) {
                 $scope.categories = response.data;
-            })
-            .catch(function (response) {
-                $scope.status = response;
             })
 
         $scope.add = function () {

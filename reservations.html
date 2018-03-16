@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="reservationModule">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reservations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/reservation.js"></script>
+</head>
+
+<body ng-controller="reservationController">
+    <h3>{{title}}</h3>
+    <form action="">
+        <fieldset>
+            <table>
+                <tr>
+                    <td>Guest :</td>
+                    <td>
+                        <input type="text" ng-model="reservation.guest">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Table :</td>
+                    <td>
+                        <select name="tableSelect" id="tableSelect" ng-model="reservation.table">
+                            <option ng-repeat="option in tables" value="{{option._id}}">{{option.code}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Waiter :</td>
+                    <td>
+                        <select name="userSelect" id="userSelect" ng-model="reservation.user">
+                            <option ng-repeat="option in users" value="{{option._id}}">{{option.nick}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date :</td>
+                    <td>
+                        <input type="date" ng-model="reservation.createDate">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Reff</th>
+                <th>Guest</th>
+                <th>Table</th>
+                <th>Waiter</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="reservation in reservations">
+                <td>{{$index+1}}</td>
+                <td>{{reservation.reference}}</td>
+                <td>{{reservation.guest}}</td>
+                <td>{{reservation.table.code}}</td>
+                <td>{{reservation.user.nick}}</td>
+                <td>{{reservation.createDate}}</td>
+                <td>
+                    <input type="button" value="Edit" ng-click="edit(reservation)">
+                    <input type="button" value="Delete" ng-click="delete(reservation)">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
