@@ -1,68 +1,107 @@
 <!DOCTYPE html>
 <html ng-app="categoryModule">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Categories</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="scripts/Angular.min.js"></script>
     <script src="scripts/category.js"></script>
 </head>
+
 <body ng-controller="categoryController">
-    <h3>{{title}}</h3>
-    <form>
-        <fieldset>
-            <table>
+    <div class="container">
+        <h3>{{title}}</h3>
+        <hr>
+        <form>
+            <div class="form-group row">
+                <label for="inputCode" class="col-sm-1 col-form-label">Code</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputCode" ng-model="category.code">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputInitial" class="col-sm-1 col-form-label">Initial</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputInitial" ng-model="category.initial">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-1 col-form-label">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputName" ng-model="category.name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Add New" ng-click="add()" ng-show="createNew">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Update" ng-click="update()" ng-show="!createNew">
+                </div>
+            </div>
+            <!-- <fieldset>
+                <table>
+                    <tr>
+                        <td>Code : </td>
+                        <td>
+                            <input type="text" ng-model="category.code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Initial : </td>
+                        <td>
+                            <input type="text" ng-model="category.initial">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name : </td>
+                        <td>
+                            <input type="text" ng-model="category.name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                            <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset> -->
+        </form>
+        <table class="table table-sm table-bordered table-hover">
+            <thead class="text-center">
                 <tr>
-                    <td>Code : </td>
-                    <td>
-                        <input type="text" ng-model="category.code">
+                    <th>No</th>
+                    <th>Code</th>
+                    <th>Initial</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="category in categories">
+                    <td>{{$index + 1}}</td>
+                    <td>{{category.code}}</td>
+                    <td>{{category.initial}}</td>
+                    <td>{{category.name}}</td>
+                    <td class="text-center">
+                        <input type="button" class="btn btn-primary btn-sm" value="Edit" ng-click="edit(category)">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="delete(category)">
                     </td>
                 </tr>
-                <tr>
-                    <td>Initial : </td>
-                    <td>
-                        <input type="text" ng-model="category.initial">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Name : </td>
-                    <td>
-                        <input type="text" ng-model="category.name">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
-                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Code</th>
-                <th>Intial</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="category in categories">
-                <td>{{$index + 1}}</td>
-                <td>{{category.code}}</td>
-                <td>{{category.initial}}</td>
-                <td>{{category.name}}</td>
-                <td>
-                    <input type="button" value="Edit" ng-click="edit(category)">
-                    <input type="button" value="Delete" ng-click="delete(category)">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

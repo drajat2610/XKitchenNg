@@ -1,81 +1,128 @@
 <!DOCTYPE html>
 <html ng-app="userModule">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/user.js"></script>
 </head>
+
 <body ng-controller="userController">
-    <h3>{{title}}</h3>
-    <span>{{status}}</span>
-    <form action="">
-        <fieldset>
-            <table>
+    <div class="container">
+        <h3>{{title}}</h3>
+        <hr>
+        <span>{{status}}</span>
+        <form action="">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputUserId">UserId</label>
+                    <input type="text" class="form-control form-control-sm" id="inputUserId" placeholder="UserId" ng-model="user.userId">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control form-control-sm" id="inputPassword" placeholder="Password" ng-model="user.password">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputBadgeId">BadgeId</label>
+                    <input type="text" class="form-control form-control-sm" id="inputBadgeId" placeholder="BadgeId" ng-model="user.badgeId">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputNick">Nick</label>
+                    <input type="text" class="form-control form-control-sm" id="inputNick" placeholder="NickName" ng-model="user.nick">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputFullName">Full Name</label>
+                    <input type="text" class="form-control form-control-sm" id="inputFullName" placeholder="Full Name" ng-model="user.fullName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Add New" ng-click="add()" ng-show="createNew">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Update" ng-click="update()" ng-show="!createNew">
+                </div>
+            </div>
+            <!-- <fieldset>
+                <table>
+                    <tr>
+                        <td>UserId</td>
+                        <td>
+                            <input type="text" ng-model="user.userId">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td>
+                            <input type="password" ng-model="user.password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>BadgeId</td>
+                        <td>
+                            <input type="text" ng-model="user.badgeId">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nick</td>
+                        <td>
+                            <input type="text" ng-model="user.nick">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fullname</td>
+                        <td>
+                            <input type="text" ng-model="user.fullName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                            <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset> -->
+        </form>
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="text-center">
                 <tr>
-                    <td>UserId</td>
-                    <td>
-                        <input type="text" ng-model="user.userId">
+                    <th>No</th>
+                    <th>UserId</th>
+                    <th>BadgeId</th>
+                    <th>Nick</th>
+                    <th>Fullname</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{$index+1}}</td>
+                    <td>{{user.userId}}</td>
+                    <td>{{user.badgeId}}</td>
+                    <td>{{user.nick}}</td>
+                    <td>{{user.fullName}}</td>
+                    <td class="text-center">
+                        <input type="button" class="btn btn-primary btn-sm" value="Edit" ng-click="edit(user)">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="delete(user)">
                     </td>
                 </tr>
-                <tr>
-                    <td>Password</td>
-                    <td>
-                        <input type="password" ng-model="user.password">
-                    </td>
-                </tr>
-                <tr>
-                    <td>BadgeId</td>
-                    <td>
-                        <input type="text" ng-model="user.badgeId">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nick</td>
-                    <td>
-                        <input type="text" ng-model="user.nick">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fullname</td>
-                    <td>
-                        <input type="text" ng-model="user.fullName">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
-                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>UserId</th>
-                <th>BadgeId</th>
-                <th>Nick</th>
-                <th>Fullname</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="user in users">
-                <td>{{user.userId}}</td>
-                <td>{{user.badgeId}}</td>
-                <td>{{user.nick}}</td>
-                <td>{{user.fullName}}</td>
-                <td>
-                    <input type="button" value="Edit" ng-click="edit(user)">
-                    <input type="button" value="Delete" ng-click="delete(user)">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

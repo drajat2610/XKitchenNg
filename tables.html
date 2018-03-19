@@ -7,65 +7,101 @@
     <title>Tables</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/table.js"></script>
 </head>
 
 <body ng-controller="tableController">
-    <h3>{{title}}</h3>
-    <form>
-        <fieldset>
-            <table>
+    <div class="container">
+        <h3>{{title}}</h3>
+        <hr>
+        <form>
+            <div class="form-group row">
+                <label for="inputCode" class="col-sm-1 col-form-label">Code</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputCode" ng-model="table.code">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputSeat" class="col-sm-1 col-form-label">Seat</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control form-control-sm" id="inputSeat" ng-model="table.seat">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDescription" class="col-sm-1 col-form-label">Description</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputDescription" ng-model="table.description">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Add New" ng-click="add()" ng-show="createNew">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Update" ng-click="update()" ng-show="!createNew">
+                </div>
+            </div>
+            <!-- <fieldset>
+                <table>
+                    <tr>
+                        <td>Code :</td>
+                        <td>
+                            <input type="text" ng-model="table.code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Seat :</td>
+                        <td>
+                            <input type="number" ng-model="table.seat">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Description :</td>
+                        <td>
+                            <input type="text" ng-model="table.description">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                            <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset> -->
+        </form>
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="text-center">
                 <tr>
-                    <td>Code :</td>
-                    <td>
-                        <input type="text" ng-model="table.code">
+                    <th>No</th>
+                    <th>Code</th>
+                    <th>Seat</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="table in tables">
+                    <td>{{$index+1}}</td>
+                    <td>{{table.code}}</td>
+                    <td>{{table.seat}}</td>
+                    <td>{{table.description}}</td>
+                    <td class="text-center">
+                        <input type="button" class="btn btn-primary btn-sm" value="Edit" ng-click="edit(table)">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="delete(table)">
                     </td>
                 </tr>
-                <tr>
-                    <td>Seat :</td>
-                    <td>
-                        <input type="number" ng-model="table.seat">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description :</td>
-                    <td>
-                        <input type="text" ng-model="table.description">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
-                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Code</th>
-                <th>Seat</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="table in tables">
-                <td>{{$index+1}}</td>
-                <td>{{table.code}}</td>
-                <td>{{table.seat}}</td>
-                <td>{{table.description}}</td>
-                <td>
-                    <input type="button" value="Edit" ng-click="edit(table)">
-                    <input type="button" value="Delete" ng-click="delete(table)">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -7,79 +7,124 @@
     <title>Reservations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/reservation.js"></script>
 </head>
 
 <body ng-controller="reservationController">
-    <h3>{{title}}</h3>
-    <form action="">
-        <fieldset>
-            <table>
+    <div class="container">
+        <h3>{{title}}</h3>
+        <hr>
+        <form action="">
+            <div class="form-group row">
+                <label for="inputReference" class="col-sm-1 col-form-label">Reference</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="inputReference" ng-model="reservation.reference">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputGuest" class="col-sm-1 col-form-label">Guest</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="inputGuest" ng-model="reservation.guest">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputTable" class="col-sm-1 col-form-label">Table</label>
+                <div class="col-sm-2">
+                    <select class="custom-select custom-select-sm" name="tableSelect" id="tableSelect" ng-model="reservation.table">
+                        <option ng-repeat="option in tables" value="{{option._id}}">{{option.code}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputUser" class="col-sm-1 col-form-label">Waiter</label>
+                <div class="col-sm-2">
+                    <select class="custom-select custom-select-sm" name="userSelect" id="userSelect" ng-model="reservation.user">
+                        <option ng-repeat="option in users" value="{{option._id}}">{{option.nick}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDate" class="col-sm-1 col-form-label">Date</label>
+                <div class="col-sm-3">
+                    <input type="datetime-local" class="form-control form-control-sm" id="inputDate" ng-model="reservation.createDate">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Add New" ng-click="add()" ng-show="createNew">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Update" ng-click="update()" ng-show="!createNew">
+                </div>
+            </div>
+            <!-- <fieldset>
+                <table>
+                    <tr>
+                        <td>Guest :</td>
+                        <td>
+                            <input type="text" ng-model="reservation.guest">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Table :</td>
+                        <td>
+                            <select name="tableSelect" id="tableSelect" ng-model="reservation.table">
+                                <option ng-repeat="option in tables" value="{{option._id}}">{{option.code}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Waiter :</td>
+                        <td>
+                            <select name="userSelect" id="userSelect" ng-model="reservation.user">
+                                <option ng-repeat="option in users" value="{{option._id}}">{{option.nick}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Date :</td>
+                        <td>
+                            <input type="date" ng-model="reservation.createDate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                            <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset> -->
+        </form>
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="text-center">
                 <tr>
-                    <td>Guest :</td>
-                    <td>
-                        <input type="text" ng-model="reservation.guest">
+                    <th>No</th>
+                    <th>Reff</th>
+                    <th>Guest</th>
+                    <th>Table</th>
+                    <th>Waiter</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reservation in reservations">
+                    <td>{{$index+1}}</td>
+                    <td>{{reservation.reference}}</td>
+                    <td>{{reservation.guest}}</td>
+                    <td>{{reservation.table.code}}</td>
+                    <td>{{reservation.user.nick}}</td>
+                    <td>{{reservation.createDate}}</td>
+                    <td class="text-center">
+                        <input type="button" class="btn btn-sm btn-primary" value="Edit" ng-click="edit(reservation)">
+                        <input type="button" class="btn btn-sm btn-danger" value="Delete" ng-click="delete(reservation)">
                     </td>
                 </tr>
-                <tr>
-                    <td>Table :</td>
-                    <td>
-                        <select name="tableSelect" id="tableSelect" ng-model="reservation.table">
-                            <option ng-repeat="option in tables" value="{{option._id}}">{{option.code}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Waiter :</td>
-                    <td>
-                        <select name="userSelect" id="userSelect" ng-model="reservation.user">
-                            <option ng-repeat="option in users" value="{{option._id}}">{{option.nick}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Date :</td>
-                    <td>
-                        <input type="date" ng-model="reservation.createDate">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
-                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Reff</th>
-                <th>Guest</th>
-                <th>Table</th>
-                <th>Waiter</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="reservation in reservations">
-                <td>{{$index+1}}</td>
-                <td>{{reservation.reference}}</td>
-                <td>{{reservation.guest}}</td>
-                <td>{{reservation.table.code}}</td>
-                <td>{{reservation.user.nick}}</td>
-                <td>{{reservation.createDate}}</td>
-                <td>
-                    <input type="button" value="Edit" ng-click="edit(reservation)">
-                    <input type="button" value="Delete" ng-click="delete(reservation)">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

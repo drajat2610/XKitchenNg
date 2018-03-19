@@ -7,90 +7,140 @@
     <title>Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/product.js"></script>
 </head>
 
 <body ng-controller="productController">
-    <h3>{{title}}</h3>
-    <span>{{status}}</span>
-    <form>
-        <fieldset>
-            <table>
+    <div class="container">
+        <h3>{{title}}</h3>
+        <hr>
+        <span>{{status}}</span>
+        <form>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputUserId">Category</label>
+                    <select class="custom-select custom-select-sm" name="categorySelect" id="categorySelect" ng-model="product.category">
+                        <option ng-repeat="option in categories" value="{{option._id}}">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputCode">Code</label>
+                    <input type="text" class="form-control form-control-sm" id="inputCode" placeholder="Code" ng-model="product.code">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputInitial">Initial</label>
+                    <input type="text" class="form-control form-control-sm" id="inputInitial" placeholder="Initial" ng-model="product.initial">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputName">Name</label>
+                    <input type="text" class="form-control form-control-sm" id="inputName" placeholder="Name" ng-model="product.name">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control form-control-sm" id="inputDescription" placeholder="Description" ng-model="product.description">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputPrice">Price</label>
+                    <input type="number" class="form-control form-control-sm" id="inputPrice" placeholder="Price" ng-model="product.price">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-1">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Add New" ng-click="add()" ng-show="createNew">
+                    <input type="button" class="btn btn-outline-primary btn-sm" value="Update" ng-click="update()" ng-show="!createNew">
+                </div>
+            </div>
+            <!-- <fieldset>
+                <table>
+                    <tr>
+                        <td>Category :</td>
+                        <td>
+                            <select name="categorySelect" id="categorySelect" ng-model="product.category">
+                                <option ng-repeat="option in categories" value="{{option._id}}">{{option.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Code :</td>
+                        <td>
+                            <input type="text" ng-model="product.code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Initial :</td>
+                        <td>
+                            <input type="text" ng-model="product.initial">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name :</td>
+                        <td>
+                            <input type="text" ng-model="product.name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Description :</td>
+                        <td>
+                            <input type="text" ng-model="product.description">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Price :</td>
+                        <td>
+                            <input type="number" ng-model="product.price">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
+                            <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset> -->
+        </form>
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="text-center">
                 <tr>
-                    <td>Category :</td>
-                    <td>
-                        <select name="categorySelect" id="categorySelect" ng-model="product.category">
-                            <option ng-repeat="option in categories" value= "{{option._id}}">{{option.name}}</option>
-                        </select>
+                    <th>No</th>
+                    <th>Category</th>
+                    <th>Code</th>
+                    <th>Initial</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in products">
+                    <td>{{$index+1}}</td>
+                    <td>{{product.category.name}}</td>
+                    <td>{{product.code}}</td>
+                    <td>{{product.initial}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.price}}</td>
+                    <td class="text-center">
+                        <input type="button" class="btn btn-primary btn-sm" value="Edit" ng-click="edit(product)">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete" ng-click="delete(product)">
                     </td>
                 </tr>
-                <tr>
-                    <td>Code :</td>
-                    <td>
-                        <input type="text" ng-model="product.code">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Initial :</td>
-                    <td>
-                        <input type="text" ng-model="product.initial">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Name :</td>
-                    <td>
-                        <input type="text" ng-model="product.name">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description :</td>
-                    <td>
-                        <input type="text" ng-model="product.description">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Price :</td>
-                    <td>
-                        <input type="number" ng-model="product.price">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Add New" ng-click="add()" ng-show="createNew">
-                        <input type="button" value="Update" ng-click="update()" ng-show="!createNew">
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Code</th>
-                <th>Initial</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="product in products">
-                <td>{{product.category.name}}</td>
-                <td>{{product.code}}</td>
-                <td>{{product.initial}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-                <td>
-                    <input type="button" value="Edit" ng-click="edit(product)">
-                    <input type="button" value="Delete" ng-click="delete(product)">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
